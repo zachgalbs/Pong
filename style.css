@@ -1,0 +1,13 @@
+body {
+    background-color: black;
+}
+.player {
+    background-color: white;
+    height: 40px;
+    width: 6px;
+    position: absolute;
+    transition: top 0.5s;
+}
+#player2 {
+    position: absolute;
+}

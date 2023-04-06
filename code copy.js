@@ -1,10 +1,8 @@
 let pOne = document.getElementById("player1");
 let pTwo = document.getElementById("player2")
-let pOneTop = 10;
-let pTwoTop = 10;
-pTwo.style.top = pTwoTop + "px";
-pTwo.style.right = "10px";
-pOne.style.top = pOneTop + "px";
+let pOnePos = 10;
+let pTwoPos = 10;
+pOne.
 // Every time there is a key down:
 document.onkeydown = function(e) {
     if (e.key == 's' && parseInt(pOne.style.top) < window.innerHeight-50) {
