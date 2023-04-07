@@ -3,11 +3,18 @@ body {
 }
 .player {
     background-color: white;
-    height: 40px;
-    width: 6px;
+    height: 5vh;
+    width: 7px;
     position: absolute;
-    transition: top 0.5s;
+    transition: top 0.1s;
 }
-#player2 {
+#ball {
+    background-color: white;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
     position: absolute;
+    transition: all 0.1s;
+    top: 50%;
+    left: 50%;
 }
