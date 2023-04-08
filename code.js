@@ -102,11 +102,8 @@ function moveBall() {
     if (ballY < 10) {yDir = "down";}
     if (ballY > window.innerHeight-10) {yDir = "up";}
 
-    console.log(ballX)
-    console.log(pOneLeft)
-    console.log(pOneWidth)
-    if (ballX <= pOneLeft + pOneWidth && (ballY <= pOneTop + pOneHeight && ballY >= pOneTop)) {xDir = "right"}
-    if (ballX >= pTwoLeft + pOneWidth && (ballY <= pTwoTop + pOneHeight && ballY >= pTwoTop)) {xDir = "left"}
+    if (ballX <= pOneLeft + pOneWidth && (ballY <= pOneTop + pOneHeight + 10 && ballY >= pOneTop - 20)) {xDir = "right"}
+    if (ballX >= pTwoLeft + pOneWidth && (ballY <= pTwoTop + pOneHeight + 10 && ballY >= pTwoTop - 20)) {xDir = "left"}
     // finalizing the ball position
     ball.style.top = ballY + "px";
     ball.style.left = ballX + "px";
