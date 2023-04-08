@@ -3,7 +3,7 @@ body {
 }
 .player {
     background-color: white;
-    height: 5vh;
+    height: 7vh;
     width: 7px;
     position: absolute;
     transition: top 0.1s;
