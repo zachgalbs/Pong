@@ -44,18 +44,18 @@ document.addEventListener('keyup', onKeyUp);
 // Move paddles based on key events
 function movePaddles() {
     if (pOneMovingUp && parseInt(pOne.style.top) > 10) {
-      pOneTop -= 5;
+      pOneTop -= 15;
     }
     if (pOneMovingDown && parseInt(pOne.style.top) < window.innerHeight - paddleHeight - 10) {
-      pOneTop += 5;
+      pOneTop += 15;
     }
     pOne.style.top = pOneTop + "px";
   
     if (pTwoMovingUp && parseInt(pTwo.style.top) > 10) {
-      pTwoTop -= 5;
+      pTwoTop -= 15;
     }
     if (pTwoMovingDown && parseInt(pTwo.style.top) < window.innerHeight - paddleHeight - 10) {
-      pTwoTop += 5;
+      pTwoTop += 15;
     }
     pTwo.style.top = pTwoTop + "px";
   
@@ -66,7 +66,6 @@ function movePaddles() {
   requestAnimationFrame(movePaddles);
   
 // Move the ball initially
-const ballStyle = getComputedStyle(ball);
 let randomNum = Math.round(Math.random());
 let xDir;
 let yDir;
@@ -80,6 +79,15 @@ if (randomNum == 1) {
 }
 // Move the ball and check if the ball has hit the edge
 function moveBall() {
+    const ballStyle = getComputedStyle(ball);
+    const pOneStyle = getComputedStyle(pOne);
+    const pTwoStyle = getComputedStyle(pTwo);
+    let pOneLeft = parseInt(pOneStyle.left);
+    let pOneTop = parseInt(pOneStyle.top);
+    let pTwoLeft = parseInt(pTwoStyle.left);
+    let pTwoTop = parseInt(pTwoStyle.top);
+    let pOneWidth = parseInt(pOneStyle.width);
+    let pOneHeight = parseInt(pOneStyle.height);
     let ballX = parseInt(ballStyle.left);
     let ballY = parseInt(ballStyle.top);
     // move the balls y
@@ -94,10 +102,15 @@ function moveBall() {
     if (ballY < 10) {yDir = "down";}
     if (ballY > window.innerHeight-10) {yDir = "up";}
 
+    console.log(ballX)
+    console.log(pOneLeft)
+    console.log(pOneWidth)
+    if (ballX <= pOneLeft + pOneWidth && (ballY <= pOneTop + pOneHeight && ballY >= pOneTop)) {xDir = "right"}
+    if (ballX >= pTwoLeft + pOneWidth && (ballY <= pTwoTop + pOneHeight && ballY >= pTwoTop)) {xDir = "left"}
     // finalizing the ball position
     ball.style.top = ballY + "px";
     ball.style.left = ballX + "px";
-    
+
     requestAnimationFrame(moveBall);
 }
 
