@@ -65,21 +65,41 @@ function movePaddles() {
   // Start moving paddles
   requestAnimationFrame(movePaddles);
   
-  // Move the ball
-  function moveBall() {
-    const ballStyle = getComputedStyle(ball);
+// Move the ball initially
+const ballStyle = getComputedStyle(ball);
+let randomNum = Math.round(Math.random());
+let xDir;
+let yDir;
+if (randomNum == 0) {
+    xDir = "left"
+    yDir = "up"
+}
+if (randomNum == 1) {
+    xDir = "right"
+    yDir = "down"
+}
+// Move the ball and check if the ball has hit the edge
+function moveBall() {
     let ballX = parseInt(ballStyle.left);
     let ballY = parseInt(ballStyle.top);
-    let ballDir = Math.round(Math.random());
-  
-    if (ballDir === 0 && ballX > 10) {
-      ballX -= 5;
-      ball.style.left = ballX + "px";
-    }
-  
+    // move the balls y
+    if (yDir == "down") {ballY += 25;}
+    if (yDir == "up") {ballY -= 25;}
+    
+    // move the balls x
+    if (xDir == "left") {ballX -= 25;}
+    if (xDir == "right") {ballX += 25;}
+
+    // check collision
+    if (ballY < 10) {yDir = "down";}
+    if (ballY > window.innerHeight-10) {yDir = "up";}
+
+    // finalizing the ball position
+    ball.style.top = ballY + "px";
+    ball.style.left = ballX + "px";
+    
     requestAnimationFrame(moveBall);
-  }
-  
-  // Start moving the ball
-  requestAnimationFrame(moveBall);
-  
+}
+
+// Start moving the ball
+requestAnimationFrame(moveBall);
