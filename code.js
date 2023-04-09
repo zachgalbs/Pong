@@ -2,6 +2,8 @@
 const pOne = document.getElementById("player1");
 const pTwo = document.getElementById("player2");
 const ball = document.getElementById("ball");
+const startButton = document.getElementById("startButton");
+const countdownTimer = document.getElementById("countdownTimer");
 
 let pOneTop = 10;
 let pTwoTop = 10;
@@ -9,66 +11,29 @@ let pOneMovingUp = false;
 let pOneMovingDown = false;
 let pTwoMovingUp = false;
 let pTwoMovingDown = false;
+let countdownTime = 3;
+// set the countdownTimer to the countdownTime
+countdownTimer.innerText = countdownTime;
 
 const paddleWidth = pOne.offsetWidth;
 const paddleHeight = pOne.offsetHeight;
 
-// 
+//initialize the paddle positions:
+initPaddlePositions();
 
-function main() {
+// making game start when button is pressed
+
+startGame();
+
 
 // Initialize paddle positions
 function initPaddlePositions() {
     pOne.style.top = pOneTop + "px";
     pTwo.style.top = pTwoTop + "px";
-    pTwo.style.right = "10px";
+    pTwo.style.right = "0px";
   }
-  
-  initPaddlePositions();
-  
-  // Keydown event listener
-  function onKeyDown(e) {
-    if (e.key === 's') pOneMovingDown = true;
-    if (e.key === 'w') pOneMovingUp = true;
-    if (e.key === 'ArrowDown') pTwoMovingDown = true;
-    if (e.key === 'ArrowUp') pTwoMovingUp = true;
-  }
-  
-  // Keyup event listener
-  function onKeyUp(e) {
-    if (e.key === 's') pOneMovingDown = false;
-    if (e.key === 'w') pOneMovingUp = false;
-    if (e.key === 'ArrowDown') pTwoMovingDown = false;
-    if (e.key === 'ArrowUp') pTwoMovingUp = false;
-  }
-  
-  document.addEventListener('keydown', onKeyDown);
-  document.addEventListener('keyup', onKeyUp);
-  
-  // Move paddles based on key events
-  function movePaddles() {
-      if (pOneMovingUp && parseInt(pOne.style.top) > 10) {
-        pOneTop -= 15;
-      }
-      if (pOneMovingDown && parseInt(pOne.style.top) < window.innerHeight - paddleHeight - 10) {
-        pOneTop += 15;
-      }
-      pOne.style.top = pOneTop + "px";
-    
-      if (pTwoMovingUp && parseInt(pTwo.style.top) > 10) {
-        pTwoTop -= 15;
-      }
-      if (pTwoMovingDown && parseInt(pTwo.style.top) < window.innerHeight - paddleHeight - 10) {
-        pTwoTop += 15;
-      }
-      pTwo.style.top = pTwoTop + "px";
-    
-      requestAnimationFrame(movePaddles);
-    }
-    
-    // Start moving paddles
-    requestAnimationFrame(movePaddles);
-    
+
+function main() {
   // Move the ball initially
   let randomNum = Math.round(Math.random());
   let xDir;
@@ -138,4 +103,70 @@ function initPaddlePositions() {
   // Start moving the ball
   requestAnimationFrame(moveBall);
 }
-main();
+
+// Keydown event listener
+function onKeyDown(e) {
+    if (e.key === 's') pOneMovingDown = true;
+    if (e.key === 'w') pOneMovingUp = true;
+    if (e.key === 'ArrowDown') pTwoMovingDown = true;
+    if (e.key === 'ArrowUp') pTwoMovingUp = true;
+  }
+  
+// Keyup event listener
+function onKeyUp(e) {
+if (e.key === 's') pOneMovingDown = false;
+if (e.key === 'w') pOneMovingUp = false;
+if (e.key === 'ArrowDown') pTwoMovingDown = false;
+if (e.key === 'ArrowUp') pTwoMovingUp = false;
+}
+
+document.addEventListener('keydown', onKeyDown);
+document.addEventListener('keyup', onKeyUp);
+
+  
+// Move paddles based on key events
+function movePaddles() {
+    if (pOneMovingUp && parseInt(pOne.style.top) > 10) {
+    pOneTop -= 15;
+    }
+    if (pOneMovingDown && parseInt(pOne.style.top) < window.innerHeight - paddleHeight - 10) {
+    pOneTop += 15;
+    }
+    pOne.style.top = pOneTop + "px";
+
+    if (pTwoMovingUp && parseInt(pTwo.style.top) > 10) {
+    pTwoTop -= 15;
+    }
+    if (pTwoMovingDown && parseInt(pTwo.style.top) < window.innerHeight - paddleHeight - 10) {
+    pTwoTop += 15;
+    }
+    pTwo.style.top = pTwoTop + "px";
+
+    requestAnimationFrame(movePaddles);
+}
+
+// Start moving paddles
+requestAnimationFrame(movePaddles);
+    
+function startGame() {
+    startButton.addEventListener('mousedown', () => {
+        countdownTimer.style.opacity = '1';
+        countdownTheTimer();
+        setTimeout(() => {
+            startButton.style.opacity = '0';
+            main();
+            ball.style.opacity = '1';
+        }, 3000)
+    });
+}
+
+function countdownTheTimer() {
+    const countdownInterval = setInterval(() => {
+        countdownTime--;
+        countdownTimer.innerText = countdownTime;
+        if (countdownTime === 0) {
+            clearInterval(countdownInterval);
+            countdownTimer.style.display = 'none';
+        }
+    }, 1000);
+}
