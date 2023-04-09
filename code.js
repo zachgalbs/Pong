@@ -60,6 +60,7 @@ function main() {
       let ballX = parseInt(ballStyle.left);
       let ballY = parseInt(ballStyle.top);
       let speed = window.innerWidth/75;
+
       // move the balls y
       if (yDir == "down") {ballY += speed;}
       if (yDir == "up") {ballY -= speed;}
@@ -67,17 +68,16 @@ function main() {
       // move the balls x
       if (xDir == "left") {ballX -= speed;}
       if (xDir == "right") {ballX += speed;}
-  
       // check collision
       if (ballY < 10) {yDir = "down";}
       if (ballY > window.innerHeight-10) {yDir = "up";}
 
       // if the ball is at or past the rackets x position,
-      if (ballX <= pOneLeft + pOneWidth) {
+      if (ballX + 5 <= pOneLeft + pOneWidth) {
         // if the balls y position is between the top and bottom of the paddle
         if (ballY <= pOneTop + pOneHeight + 10 && ballY >= pOneTop - 20) {xDir = "right";}
       }
-      if (ballX + parseInt(ballStyle.width) >= pTwoLeft) {
+      if (ballX >= pTwoLeft) {
         if (ballY <= pTwoTop + pOneHeight + 10 && ballY >= pTwoTop - 20) {xDir = "left";}
       }
       // checking if ball has hit the edge
@@ -87,7 +87,7 @@ function main() {
         }, 100);
         return;
       }
-      if (ballX + ball.offsetWidth >= document.documentElement.clientWidth) {
+      if (ballX >= window.innerWidth) {
         setTimeout(() => {
           alert("Player one (left side) wins!");
         }, 100);
