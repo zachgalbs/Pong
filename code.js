@@ -13,6 +13,8 @@ let pTwoMovingDown = false;
 const paddleWidth = pOne.offsetWidth;
 const paddleHeight = pOne.offsetHeight;
 
+// 
+
 function main() {
 
 // Initialize paddle positions
@@ -77,7 +79,7 @@ function initPaddlePositions() {
   }
   if (randomNum == 1) {
       xDir = "right"
-      yDir = "down"
+      yDir = "up"
   }
   // Move the ball and check if the ball has hit the edge
   function moveBall() {
@@ -92,24 +94,25 @@ function initPaddlePositions() {
       let pOneHeight = parseInt(pOneStyle.height);
       let ballX = parseInt(ballStyle.left);
       let ballY = parseInt(ballStyle.top);
+      let speed = window.innerWidth/75;
       // move the balls y
-      if (yDir == "down") {ballY += 25;}
-      if (yDir == "up") {ballY -= 25;}
+      if (yDir == "down") {ballY += speed;}
+      if (yDir == "up") {ballY -= speed;}
       
       // move the balls x
-      if (xDir == "left") {ballX -= 25;}
-      if (xDir == "right") {ballX += 25;}
+      if (xDir == "left") {ballX -= speed;}
+      if (xDir == "right") {ballX += speed;}
   
       // check collision
       if (ballY < 10) {yDir = "down";}
       if (ballY > window.innerHeight-10) {yDir = "up";}
 
       // if the ball is at or past the rackets x position,
-      if (ballX + 25 < pOneLeft + pOneWidth) {
+      if (ballX <= pOneLeft + pOneWidth) {
         // if the balls y position is between the top and bottom of the paddle
         if (ballY <= pOneTop + pOneHeight + 10 && ballY >= pOneTop - 20) {xDir = "right";}
       }
-      if (ballX >= pTwoLeft + pOneWidth) {
+      if (ballX + parseInt(ballStyle.width) >= pTwoLeft) {
         if (ballY <= pTwoTop + pOneHeight + 10 && ballY >= pTwoTop - 20) {xDir = "left";}
       }
       // checking if ball has hit the edge

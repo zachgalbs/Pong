@@ -1,10 +1,12 @@
 body {
     background-color: black;
+    margin: 0;
+    padding: 0;
 }
 .player {
     background-color: white;
-    height: 7vh;
-    width: 7px;
+    height: 10vh;
+    width: 10px;
     position: absolute;
     transition: top 0.1s;
 }
@@ -17,4 +19,31 @@ body {
     transition: all 0.1s;
     top: 50%;
     left: 50%;
+}
+#startButtonContainer {
+    display: grid;
+    justify-items: center;
+    align-items: center;
+    height: 100vh;
+    width: 100%; /* Changed from 100vw to 100% */
+}
+#startButton {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 24px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.1s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+#startButton:hover {
+    background-color: #45a049;
+    opacity: 80%;
+}
+#startButton:active {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5), 0 1px 2px rgba(0, 0, 0, 0.3);
+    transform: translateY(2px);
+    opacity: 50%;
 }
