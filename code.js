@@ -29,7 +29,7 @@ initPaddlePositions();
 
 // making game start when button is pressed
 
-if (!startButtonPressed) {startGame(); startButtonPressed = true;}
+startGame();
 
 // Initialize paddle positions
 function initPaddlePositions() {
@@ -64,7 +64,7 @@ function main() {
       let pOneHeight = parseInt(pOneStyle.height);
       let ballX = parseInt(ballStyle.left);
       let ballY = parseInt(ballStyle.top);
-      let speed = window.innerWidth/75;
+      let speed = window.innerWidth/200;
 
       // move the balls y
       if (yDir == "down") {ballY += speed;}
@@ -159,12 +159,15 @@ requestAnimationFrame(movePaddles);
     
 function startGame() {
     startButton.addEventListener('mousedown', () => {
-        countdownTheTimer();
-        setTimeout(() => {
-            startButton.style.opacity = '0';
-            main();
-            ball.style.opacity = '1';
-        }, 3000)
+        if (!startButtonPressed) {
+            countdownTheTimer();
+            startButtonPressed = true;
+            setTimeout(() => {
+                startButton.style.opacity = '0';
+                main();
+                ball.style.opacity = '1';
+            }, 3000)
+        }
     });
 }
 
