@@ -4,6 +4,8 @@ const pTwo = document.getElementById("player2");
 const ball = document.getElementById("ball");
 const startButton = document.getElementById("startButton");
 const countdownTimer = document.getElementById("countdownTimer");
+const pOneScore = document.getElementById("pOneScore");
+const pTwoScore = document.getElementById("pTwoScore");
 
 let pOneTop = 10;
 let pTwoTop = 10;
@@ -12,6 +14,10 @@ let pOneMovingDown = false;
 let pTwoMovingUp = false;
 let pTwoMovingDown = false;
 let countdownTime = 3;
+let pOneScoreNum = 0;
+let pTwoScoreNum = 0;
+let startButtonPressed = false;
+
 // set the countdownTimer to the countdownTime
 countdownTimer.innerText = countdownTime;
 
@@ -23,8 +29,7 @@ initPaddlePositions();
 
 // making game start when button is pressed
 
-startGame();
-
+if (!startButtonPressed) {startGame(); startButtonPressed = true;}
 
 // Initialize paddle positions
 function initPaddlePositions() {
@@ -82,14 +87,18 @@ function main() {
       }
       // checking if ball has hit the edge
       if (ballX <= 0) {
+        pTwoScoreNum++;
         setTimeout(() => {
-          alert("Player two (right side) wins!");
+            pTwoScore.innerText = pTwoScoreNum;
+            resetBall();
         }, 100);
         return;
       }
       if (ballX >= window.innerWidth) {
+        pOneScoreNum++;
         setTimeout(() => {
-          alert("Player one (left side) wins!");
+            pOneScore.innerText = pOneScoreNum;
+            resetBall();
         }, 100);
         return;
       }
@@ -150,7 +159,6 @@ requestAnimationFrame(movePaddles);
     
 function startGame() {
     startButton.addEventListener('mousedown', () => {
-        countdownTimer.style.opacity = '1';
         countdownTheTimer();
         setTimeout(() => {
             startButton.style.opacity = '0';
@@ -161,12 +169,24 @@ function startGame() {
 }
 
 function countdownTheTimer() {
+    countdownTimer.innerText = countdownTime;
+    countdownTimer.style.opacity = '1';
+    let time = countdownTime;
     const countdownInterval = setInterval(() => {
-        countdownTime--;
-        countdownTimer.innerText = countdownTime;
-        if (countdownTime === 0) {
+        time--;
+        countdownTimer.innerText = time;
+        if (time === 0) {
             clearInterval(countdownInterval);
-            countdownTimer.style.display = 'none';
+            countdownTimer.style.opacity = '0';
         }
     }, 1000);
+}
+
+function resetBall() {
+    console.log("resetBall");
+    ball.style.top = "50%";
+    ball.style.left = "50%";
+    ball.style.transform = "translate(-50%, -50%)";
+    countdownTheTimer();
+    setTimeout(main, 3000);
 }

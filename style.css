@@ -59,3 +59,37 @@ body {
     font-weight: bold;
     opacity: 0;
 }
+#scoreboard {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    align-items: center;
+    width: 15%;
+    margin: 0 auto;
+    margin-top: 2%;
+    z-index: 1;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#pOneScore, #pTwoScore {
+    font-size: 3rem;
+    color: white;
+    text-align: center;
+}
+
+#scoreSeparator {
+    width: 5%;
+    height: 100%;
+    background-color: white;
+    text-align: center;
+    margin: 0% auto;
+    padding: 0;
+    border: none;
+}
+
+
+
+
+
