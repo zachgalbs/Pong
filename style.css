@@ -5,7 +5,7 @@ body {
 }
 .player {
     background-color: white;
-    height: 10vh;
+    height: 12vh;
     width: 10px;
     position: absolute;
     transition: top 0.1s;

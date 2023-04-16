@@ -17,6 +17,9 @@ let countdownTime = 3;
 let pOneScoreNum = 0;
 let pTwoScoreNum = 0;
 let startButtonPressed = false;
+let pOneRacketDir = -1;
+let pTwoRacketDir = -1;
+let multiplier = 1;
 
 // set the countdownTimer to the countdownTime
 countdownTimer.innerText = countdownTime;
@@ -65,25 +68,44 @@ function main() {
       let ballX = parseInt(ballStyle.left);
       let ballY = parseInt(ballStyle.top);
       let speed = window.innerWidth/200;
-
       // move the balls y
-      if (yDir == "down") {ballY += speed;}
-      if (yDir == "up") {ballY -= speed;}
+      if (yDir == "down") {
+        ballY += speed * multiplier;
+    }
+      if (yDir == "up") {
+        ballY -= speed * multiplier;
+    }
       
       // move the balls x
-      if (xDir == "left") {ballX -= speed;}
-      if (xDir == "right") {ballX += speed;}
+      if (xDir == "left") {
+        console.log(multiplier);
+        ballX -= speed;
+    }
+      if (xDir == "right") {
+        ballX += speed;
+    }
       // check collision
       if (ballY < 10) {yDir = "down";}
       if (ballY > window.innerHeight-10) {yDir = "up";}
 
       // if the ball is at or past the rackets x position,
-      if (ballX + 5 <= pOneLeft + pOneWidth) {
+      if (ballX <= pOneLeft + pOneWidth) {
         // if the balls y position is between the top and bottom of the paddle
-        if (ballY <= pOneTop + pOneHeight + 10 && ballY >= pOneTop - 20) {xDir = "right";}
+        if (ballY <= pOneTop + pOneHeight + 5 && ballY >= pOneTop - 5) {
+            console.log("pOneRacketDir: " + pOneRacketDir);
+            if (pOneRacketDir == 1) {multiplier = 3;}
+            if (pOneRacketDir == 0) {multiplier = -3;}
+            if (pOneRacketDir != 1 && pOneRacketDir != 0) {multiplier = 1;}
+            xDir = "right";
+        }
       }
       if (ballX >= pTwoLeft) {
-        if (ballY <= pTwoTop + pOneHeight + 10 && ballY >= pTwoTop - 20) {xDir = "left";}
+        if (ballY <= pTwoTop + pOneHeight + 5 && ballY >= pTwoTop - 5) {
+            if (pTwoRacketDir == 1) {multiplier = 3};
+            if (pTwoRacketDir == 0) {multiplier = -3};
+            if (pTwoRacketDir != 1 && pTwoRacketDir != 0) {multiplier = 1;}
+            xDir = "left";
+        }
       }
       // checking if ball has hit the edge
       if (ballX <= 0) {
@@ -137,20 +159,27 @@ document.addEventListener('keyup', onKeyUp);
 function movePaddles() {
     if (pOneMovingUp && parseInt(pOne.style.top) > 10) {
     pOneTop -= 15;
+    pOneRacketDir = 1;
+    console.log("set pOneRacket Dir: " + pOneRacketDir);
     }
-    if (pOneMovingDown && parseInt(pOne.style.top) < window.innerHeight - paddleHeight - 10) {
+    else if (pOneMovingDown && parseInt(pOne.style.top) < window.innerHeight - paddleHeight - 10) {
     pOneTop += 15;
+    pOneRacketDir = 0;
     }
+    else {pOneRacketDir = -1;}
     pOne.style.top = pOneTop + "px";
-
+    racketDir = "down";
     if (pTwoMovingUp && parseInt(pTwo.style.top) > 10) {
     pTwoTop -= 15;
+    pTwoRacketDir = 1;
     }
-    if (pTwoMovingDown && parseInt(pTwo.style.top) < window.innerHeight - paddleHeight - 10) {
+    else if (pTwoMovingDown && parseInt(pTwo.style.top) < window.innerHeight - paddleHeight - 10) {
     pTwoTop += 15;
+    pTwoRacketDir = 0;
     }
+    else {pTwoRacketDir = -1;}
     pTwo.style.top = pTwoTop + "px";
-
+    
     requestAnimationFrame(movePaddles);
 }
 
@@ -164,6 +193,7 @@ function startGame() {
             startButtonPressed = true;
             setTimeout(() => {
                 startButton.style.opacity = '0';
+                startButton.style.cursor = 'default';
                 main();
                 ball.style.opacity = '1';
             }, 3000)
@@ -186,7 +216,7 @@ function countdownTheTimer() {
 }
 
 function resetBall() {
-    console.log("resetBall");
+    multiplier = 1;
     ball.style.top = "50%";
     ball.style.left = "50%";
     ball.style.transform = "translate(-50%, -50%)";
